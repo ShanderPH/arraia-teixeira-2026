@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp:*)",
+      "mcp__heroui-react__get_docs",
+      "mcp__heroui-react__list_components",
+      "mcp__heroui-react__get_component_docs",
+      "Bash(npx create-next-app@latest . --typescript --eslint --tailwind --app --src-dir --import-alias \"@/*\" --yes)"
+    ]
+  }
+}
