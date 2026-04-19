@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Arraia Teixeira — Festa Junina 2026</title>
+
+<!-- Tailwind via CDN (prototype only) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Fonts: Fraunces for display, Nunito for body, Caveat for hand-drawn -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Nunito:wght@400;600;700;800;900&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<style>
+  :root {
+    --red:    #C92A2A;
+    --corn:   #FFD43B;
+    --fire:   #F76707;
+    --royal:  #364FC7;
+    --green:  #2B8A3E;
+    --straw:  #FFF3BF;
+    --earth:  #5C4033;
+    --earth-dark: #3D2010;
+    --cream:  #FFFBEA;
+  }
+
+  html, body { background: var(--straw); color: var(--earth); font-family: 'Nunito', system-ui, sans-serif; }
+  body { overflow-x: hidden; }
+
+  .font-display { font-family: 'Alfa Slab One', 'Arial Black', Impact, sans-serif; }
+  .font-hand    { font-family: 'Caveat', cursive; }
+  .font-body    { font-family: 'Nunito', system-ui, sans-serif; }
+
+  /* ── Bandeirinhas stripe (decorative border) */
+  .bandeirinhas-border {
+    background-image: repeating-linear-gradient(
+      90deg,
+      #C92A2A 0 18px, #FFD43B 18px 36px, #364FC7 36px 54px,
+      #2B8A3E 54px 72px, #F76707 72px 90px
+    );
+    height: 6px;
+  }
+
+  /* ── Scroll reveal base state */
+  .reveal { opacity: 0; transform: translateY(24px); }
+
+  /* ── Chalkboard wood texture for contrast block */
+  .wood {
+    background:
+      radial-gradient(ellipse at top left, rgba(255,255,255,0.04), transparent 60%),
+      repeating-linear-gradient(
+        90deg,
+        #3D2010 0px, #3D2010 120px, #4A2812 120px, #4A2812 122px,
+        #3D2010 122px, #3D2010 240px, #381E0F 240px, #381E0F 242px
+      );
+  }
+
+  /* ── Star sky */
+  .star-sky {
+    background-image: radial-gradient(circle, rgba(255,255,255,0.55) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+
+  /* ── Animations */
+  @keyframes sway    { 0%,100% { transform: skewX(-1.2deg) translateX(-2px); } 50% { transform: skewX(1.2deg) translateX(2px); } }
+  @keyframes float   { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+  @keyframes floatAlt{ 0%,100% { transform: translateY(0); } 50% { transform: translateY(-22px); } }
+  @keyframes flicker { 0%,100% { transform: scaleY(1) scaleX(1); opacity: 1; }
+                       30%     { transform: scaleY(1.06) scaleX(0.96); opacity: 0.93; }
+                       70%     { transform: scaleY(0.97) scaleX(1.03); opacity: 0.97; } }
+  @keyframes spinSlow{ 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
+  @keyframes pulseGlow {
+    0%,100% { box-shadow: 0 0 0 0 rgba(201,42,42,0), 0 8px 24px rgba(201,42,42,0.45); }
+    50%     { box-shadow: 0 0 40px 12px rgba(201,42,42,0.35), 0 8px 48px rgba(255,212,59,0.3); }
+  }
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  @keyframes marqueeRev { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+  @keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+  .anim-sway    { animation: sway 5s ease-in-out infinite; transform-origin: top center; }
+  .anim-float   { animation: float 5s ease-in-out infinite; }
+  .anim-floatAlt{ animation: floatAlt 6s ease-in-out 1.2s infinite; }
+  .anim-flicker { animation: flicker 2.2s ease-in-out infinite; transform-origin: bottom center; }
+  .anim-spin    { animation: spinSlow 16s linear infinite; }
+  .anim-pulse   { animation: pulseGlow 2.5s ease-in-out infinite; }
+  .anim-marquee { animation: marquee 40s linear infinite; }
+  .anim-marquee-rev { animation: marqueeRev 60s linear infinite; }
+
+  /* Card hover lift */
+  .lift { transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s cubic-bezier(.2,.8,.2,1); }
+  .lift:hover { transform: translateY(-6px); }
+
+  /* Button press */
+  .press { transition: transform .18s ease-out, box-shadow .18s ease-out, background .18s; }
+  .press:active { transform: scale(0.97); }
+
+  /* Scroll bar subtle */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(92,64,51,0.25); border-radius: 999px; }
+
+  /* Drawn stroke animation */
+  .stroke-draw { stroke-dasharray: 600; stroke-dashoffset: 600; animation: drawLine 2.2s ease-out forwards; }
+
+  /* Mobile nav slide */
+  .menu-enter { transform: translateX(100%); }
+  .menu-open  { transform: translateX(0); transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+
+  /* Checkbox "fire" glow on selected dish */
+  .dish-on { box-shadow: 0 0 0 3px var(--corn), 0 12px 30px rgba(247,103,7,0.35); }
+
+  /* Hide reveal on print */
+  @media (prefers-reduced-motion: reduce) {
+    .anim-sway, .anim-float, .anim-floatAlt, .anim-flicker, .anim-spin,
+    .anim-pulse, .anim-marquee, .anim-marquee-rev { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" src="./arraia/svgs.jsx"></script>
+  <script type="text/babel" src="./arraia/sections.jsx"></script>
+  <script type="text/babel" src="./arraia/sections2.jsx"></script>
+  <script type="text/babel" src="./arraia/hero-v2.jsx"></script>
+  <script type="text/babel" src="./arraia/app.jsx"></script>
+</body>
+</html>

@@ -5,7 +5,29 @@
       "mcp__heroui-react__get_docs",
       "mcp__heroui-react__list_components",
       "mcp__heroui-react__get_component_docs",
-      "Bash(npx create-next-app@latest . --typescript --eslint --tailwind --app --src-dir --import-alias \"@/*\" --yes)"
+      "Bash(npx create-next-app@latest . --typescript --eslint --tailwind --app --src-dir --import-alias \"@/*\" --yes)",
+      "Bash(npm i:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)",
+      "mcp__claude_ai_Supabase__list_organizations",
+      "mcp__claude_ai_Supabase__get_cost",
+      "mcp__claude_ai_Supabase__confirm_cost",
+      "mcp__claude_ai_Supabase__create_project",
+      "mcp__claude_ai_Supabase__list_projects",
+      "mcp__claude_ai_Supabase__pause_project",
+      "mcp__claude_ai_Supabase__get_project_url",
+      "mcp__claude_ai_Supabase__get_publishable_keys",
+      "mcp__claude_ai_Supabase__apply_migration",
+      "Bash(cd:*)",
+      "Bash(cp -r src apps/web/)",
+      "Bash(cp -r public apps/web/)",
+      "Bash(cp package.json apps/web/)",
+      "Bash(cp package-lock.json apps/web/)",
+      "Bash(cp next.config.ts apps/web/)",
+      "Bash(npm install:*)",
+      "Bash(node_modules/.bin/tsc --noEmit)",
+      "Bash(node_modules/typescript/bin/tsc --noEmit)",
+      "Bash(grep *)"
     ]
   }
 }
