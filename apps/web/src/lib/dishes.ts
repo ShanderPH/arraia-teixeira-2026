@@ -1,4 +1,4 @@
-export type DishCategory = "Doces" | "Salgados" | "Bebidas" | "Outros";
+export type DishCategory = "Doces" | "Caldos" | "Salgados" | "Outros";
 
 export interface Dish {
   id: string;
@@ -9,37 +9,39 @@ export interface Dish {
 
 export const PREDEFINED_DISHES: Dish[] = [
   // Doces
-  { id: "canjica", name: "Canjica", category: "Doces", emoji: "🌽" },
-  { id: "curau", name: "Curau", category: "Doces", emoji: "🌽" },
-  { id: "arroz-doce", name: "Arroz Doce", category: "Doces", emoji: "🍚" },
-  { id: "bolo-milho", name: "Bolo de Milho", category: "Doces", emoji: "🎂" },
-  { id: "bolo-fuba", name: "Bolo de Fubá", category: "Doces", emoji: "🍰" },
-  { id: "pamonha", name: "Pamonha", category: "Doces", emoji: "🌽" },
-  { id: "mungunza", name: "Mungunzá", category: "Doces", emoji: "🥣" },
-  { id: "cocada", name: "Cocada", category: "Doces", emoji: "🥥" },
-  { id: "pe-de-moleque", name: "Pé de Moleque", category: "Doces", emoji: "🥜" },
-  { id: "brigadeiro", name: "Brigadeiro", category: "Doces", emoji: "🍫" },
-  { id: "doce-abobora", name: "Doce de Abóbora", category: "Doces", emoji: "🎃" },
+  { id: "canjicao",                      name: "Canjicão",                     category: "Doces",   emoji: "🌽" },
+  { id: "papa-de-milho",                 name: "Papa de milho",                category: "Doces",   emoji: "🥣" },
+  { id: "churros",                       name: "Churros",                      category: "Doces",   emoji: "�" },
+  { id: "bolo-milho",                    name: "Bolo de milho",                category: "Doces",   emoji: "🎂" },
+  { id: "bolo-cenoura-chocolate",        name: "Bolo de cenoura com chocolate",category: "Doces",   emoji: "🍰" },
+  { id: "bolo-aipim-coco",              name: "Bolo de aipim com coco",       category: "Doces",   emoji: "🥥" },
+  { id: "bolo-doce-leite",              name: "Bolo de doce de leite",        category: "Doces",   emoji: "�" },
+  { id: "cuscuz-coco",                  name: "Cuscuz de coco",               category: "Doces",   emoji: "�" },
+  // Caldos
+  { id: "caldo-costela",                name: "Caldo de costela",             category: "Caldos",  emoji: "�" },
+  { id: "caldo-verde",                  name: "Caldo verde",                  category: "Caldos",  emoji: "🥬" },
+  { id: "caldo-pinto",                  name: "Caldo de pinto",               category: "Caldos",  emoji: "🐔" },
+  { id: "caldo-pela-egua",             name: "Caldo pela égua",              category: "Caldos",  emoji: "�️" },
+  { id: "caldo-feijao",                name: "Caldo de feijão",              category: "Caldos",  emoji: "🫘" },
   // Salgados
-  { id: "espetinho", name: "Espetinho de Carne", category: "Salgados", emoji: "🍢" },
-  { id: "milho-cozido", name: "Milho Cozido", category: "Salgados", emoji: "🌽" },
-  { id: "caldinho-feijao", name: "Caldinho de Feijão", category: "Salgados", emoji: "🫘" },
-  { id: "caldinho-mandioca", name: "Caldinho de Mandioca", category: "Salgados", emoji: "🍲" },
-  { id: "pinhao", name: "Pinhão Cozido", category: "Salgados", emoji: "🌰" },
-  { id: "carne-sol", name: "Carne de Sol", category: "Salgados", emoji: "🥩" },
-  { id: "baiao-dois", name: "Baião de Dois", category: "Salgados", emoji: "🍛" },
-  // Bebidas
-  { id: "quentao", name: "Quentão", category: "Bebidas", emoji: "🍵" },
-  { id: "vinho-quente", name: "Vinho Quente", category: "Bebidas", emoji: "🍷" },
-  { id: "suco-milho", name: "Suco de Milho", category: "Bebidas", emoji: "🥤" },
-  { id: "licor", name: "Licor Caseiro", category: "Bebidas", emoji: "🍶" },
+  { id: "salgadinhos",                  name: "Salgadinhos",                  category: "Salgados", emoji: "�" },
+  { id: "empadao",                      name: "Empadão",                      category: "Salgados", emoji: "🥧" },
+  { id: "torta-frango",                name: "Torta de frango",              category: "Salgados", emoji: "�" },
+  { id: "cachorro-quente",             name: "Cachorro quente",              category: "Salgados", emoji: "�" },
 ];
 
-export const CATEGORIES: DishCategory[] = ["Doces", "Salgados", "Bebidas", "Outros"];
+export const CATEGORIES: DishCategory[] = ["Doces", "Caldos", "Salgados", "Outros"];
 
 export const CATEGORY_EMOJI: Record<DishCategory, string> = {
-  Doces: "🍬",
+  Doces:   "🍬",
+  Caldos:  "🍲",
   Salgados: "🍖",
-  Bebidas: "🥤",
-  Outros: "🎉",
+  Outros:  "🎉",
+};
+
+export const CATEGORY_LABEL: Record<DishCategory, string> = {
+  Doces:   "Doces",
+  Caldos:  "Caldos",
+  Salgados: "Salgados",
+  Outros:  "Outros",
 };

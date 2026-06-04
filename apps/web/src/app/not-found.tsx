@@ -24,7 +24,7 @@ export default function NotFound() {
               Voltar para o início
             </Button>
           </Link>
-          <Link href="/rsvp">
+          <Link href="/#pratos">
             <Button variant="outline" className="border-accent text-accent hover:bg-accent/10 font-bold px-6 rounded-xl w-full sm:w-auto">
               Confirmar presença
             </Button>

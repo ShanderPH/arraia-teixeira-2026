@@ -53,8 +53,8 @@ export const DISH_CATALOG: Record<string, DishCatalogEntry> = {
   },
   pacoca: {
     Icon: IconPacoca,
-    tone: "bg-earth/20",
-    accent: "text-earth",
+    tone: "bg-corn/20",
+    accent: "text-corn",
     desc: "Amendoim moído, doce e quebradiço.",
   },
   "pipoca doce": {
@@ -71,8 +71,8 @@ export const DISH_CATALOG: Record<string, DishCatalogEntry> = {
   },
   "arroz doce": {
     Icon: IconArrozDoce,
-    tone: "bg-royal/15",
-    accent: "text-royal",
+    tone: "bg-telha/15",
+    accent: "text-telha",
     desc: "Cremoso, com leite condensado e canela em pau.",
   },
 };

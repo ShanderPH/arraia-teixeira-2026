@@ -1,3 +1,5 @@
+import uuid
+
 from fastapi import APIRouter
 from supabase import Client
 
@@ -13,3 +15,10 @@ def list_guests() -> list[GuestResponse]:
     client: Client = get_supabase()
     service = GuestService(client)
     return service.list_guests()
+
+
+@router.delete("/{guest_id}", status_code=204)
+def delete_guest(guest_id: uuid.UUID) -> None:
+    client: Client = get_supabase()
+    service = GuestService(client)
+    service.delete_guest(guest_id)

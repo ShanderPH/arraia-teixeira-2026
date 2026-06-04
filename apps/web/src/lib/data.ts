@@ -1,4 +1,4 @@
-import { api, type DishResponse, type GuestResponse } from "@/lib/api";
+import { api, type DishResponse, type GuestResponse, type RSVPPayload } from "@/lib/api";
 
 export async function listDishes(): Promise<DishResponse[]> {
   try {
@@ -16,10 +16,6 @@ export async function listGuests(): Promise<GuestResponse[]> {
   }
 }
 
-export async function submitRsvp(payload: {
-  name: string;
-  attending: boolean;
-  dish_name?: string | null;
-}): Promise<GuestResponse> {
+export async function submitRsvp(payload: RSVPPayload): Promise<GuestResponse> {
   return api.rsvp.submit(payload);
 }

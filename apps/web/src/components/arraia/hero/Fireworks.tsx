@@ -1,11 +1,11 @@
 "use client";
 
 const bursts = [
-  { cx: 220, cy: 120, color: "#FFD43B", delay: 0 },
-  { cx: 1180, cy: 90, color: "#F76707", delay: 1.3 },
-  { cx: 720, cy: 60, color: "#C92A2A", delay: 2.1 },
-  { cx: 960, cy: 140, color: "#364FC7", delay: 2.9 },
-  { cx: 420, cy: 180, color: "#2B8A3E", delay: 3.6 },
+  { cx: 220, cy: 120, color: "#FEDD00", delay: 0 },
+  { cx: 1180, cy: 90, color: "#D45D12", delay: 1.3 },
+  { cx: 720, cy: 60, color: "#B23A1F", delay: 2.1 },
+  { cx: 960, cy: 140, color: "#009739", delay: 2.9 },
+  { cx: 420, cy: 180, color: "#1FB35A", delay: 3.6 },
 ];
 
 export default function Fireworks() {

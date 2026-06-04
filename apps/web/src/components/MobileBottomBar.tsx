@@ -1,26 +1,38 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { MdOutlineCheckCircle, MdOutlineFoodBank, MdHome } from "react-icons/md";
 
 const navItems = [
   { href: "/",        label: "Início",    icon: MdHome               },
-  { href: "/rsvp",    label: "Confirmar", icon: MdOutlineCheckCircle  },
+  { href: "/#pratos", label: "Confirmar", icon: MdOutlineCheckCircle  },
   { href: "/dishes",  label: "Pratos",    icon: MdOutlineFoodBank     },
 ];
 
 export default function MobileBottomBar() {
   const pathname = usePathname();
+  const [pastHero, setPastHero] = useState(false);
+
+  useEffect(() => {
+    function check() {
+      // Ajustado para nova estrutura com textos maiores - aparece após 65% da viewport
+      setPastHero(window.scrollY > window.innerHeight * 0.65);
+    }
+    check();
+    window.addEventListener("scroll", check, { passive: true });
+    return () => window.removeEventListener("scroll", check);
+  }, []);
 
   return (
     <nav
-      className="fixed bottom-3 left-3 right-3 z-50 md:hidden"
+      className={`fixed bottom-4 left-4 right-4 z-[60] md:hidden transition-all duration-300 ${pastHero ? "translate-y-0 opacity-100 pointer-events-auto" : "translate-y-full opacity-0 pointer-events-none"}`}
       aria-label="Navegação principal"
     >
       {/* Liquid glass container */}
       <div
-        className="flex items-center justify-around px-2 py-2 rounded-[2rem] border border-white/25 shadow-[0_8px_40px_rgba(0,0,0,0.45),0_2px_8px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(0,0,0,0.1)]"
+        className="flex items-center justify-around px-2 py-3 rounded-[2rem] border border-white/25 shadow-[0_8px_40px_rgba(0,0,0,0.45),0_2px_8px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(0,0,0,0.1)]"
         style={{
           background:
             "linear-gradient(135deg, rgba(92,64,51,0.82) 0%, rgba(61,32,16,0.88) 50%, rgba(106,28,0,0.82) 100%)",
@@ -46,7 +58,7 @@ export default function MobileBottomBar() {
                   transition-all duration-300 ease-out
                   ${
                     isActive
-                      ? "bg-[#FFD43B]/20 border border-[#FFD43B]/30 scale-105"
+                      ? "bg-[#FEDD00]/20 border border-[#FEDD00]/30 scale-105"
                       : "hover:bg-white/8 active:scale-95 border border-transparent"
                   }
                 `}
@@ -54,8 +66,8 @@ export default function MobileBottomBar() {
                 {/* Indicador ativo — ponto brilhante acima do ícone */}
                 {isActive && (
                   <span
-                    className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#FFD43B]"
-                    style={{ boxShadow: "0 0 6px 2px rgba(255,212,59,0.6)" }}
+                    className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#FEDD00]"
+                    style={{ boxShadow: "0 0 6px 2px rgba(254,221,0,0.6)" }}
                     aria-hidden="true"
                   />
                 )}
@@ -63,8 +75,8 @@ export default function MobileBottomBar() {
                 {/* Ícone */}
                 <Icon
                   className={`
-                    text-[1.6rem] transition-colors duration-300
-                    ${isActive ? "text-[#FFD43B]" : "text-white/55"}
+                    text-[1.75rem] transition-colors duration-300
+                    ${isActive ? "text-[#FEDD00]" : "text-white/55"}
                   `}
                   aria-hidden="true"
                 />
@@ -72,9 +84,9 @@ export default function MobileBottomBar() {
                 {/* Label */}
                 <span
                   className={`
-                    text-[10px] font-bold tracking-wide uppercase leading-none
+                    text-[11px] font-bold tracking-wide uppercase leading-none
                     transition-colors duration-300
-                    ${isActive ? "text-[#FFD43B]" : "text-white/45"}
+                    ${isActive ? "text-[#FEDD00]" : "text-white/45"}
                   `}
                 >
                   {label}

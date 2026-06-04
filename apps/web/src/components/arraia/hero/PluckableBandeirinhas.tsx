@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 
-const COLORS = ["#C92A2A", "#FFD43B", "#364FC7", "#2B8A3E", "#F76707"];
+const COLORS = ["#009C3B", "#FFDF00", "#002776", "#009C3B", "#FFDF00"];
 
 interface FlagState {
   id: number;
@@ -26,15 +26,17 @@ export default function PluckableBandeirinhas({ count = 20 }: { count?: number }
     }, 900);
   }, []);
 
-  const gap = 56;
-  const startX = 4;
+  const gap = 72;
+  const startX = 8;
+  const flagWidth = 18;
+  const flagHeight = 48;
   const width = startX * 2 + count * gap;
 
   return (
     <svg
       viewBox={`0 0 ${width} 100`}
       preserveAspectRatio="none"
-      className="w-full h-12 sm:h-14 anim-sway"
+      className="w-full h-16 sm:h-20 md:h-24 anim-sway"
       role="group"
       aria-label="Bandeirinhas de festa junina interativas"
     >
@@ -48,7 +50,7 @@ export default function PluckableBandeirinhas({ count = 20 }: { count?: number }
           const ny = up ? 22 : 14;
           return `Q${cx},${cy} ${nx},${ny}`;
         }).join(" ")}`}
-        stroke="#5C4033"
+        stroke="#0A1828"
         strokeWidth="2"
         fill="none"
         strokeLinecap="round"
@@ -64,9 +66,9 @@ export default function PluckableBandeirinhas({ count = 20 }: { count?: number }
             style={flag.dropped ? { transformOrigin: `${cx}px ${cy}px` } : undefined}
           >
             <polygon
-              points={`${cx - 14},${cy} ${cx + 14},${cy} ${cx},${cy + 38}`}
+              points={`${cx - flagWidth},${cy} ${cx + flagWidth},${cy} ${cx},${cy + flagHeight}`}
               fill={color}
-              stroke="#1A0500"
+              stroke="#0A1828"
               strokeWidth="1"
               tabIndex={0}
               role="button"

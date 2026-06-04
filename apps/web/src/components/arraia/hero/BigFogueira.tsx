@@ -31,7 +31,7 @@ export default function BigFogueira({ emberCount = 14 }: { emberCount?: number }
         {embers.map((e, i) => (
           <span
             key={i}
-            className="absolute bottom-10 w-1.5 h-1.5 rounded-full bg-[#FFD43B] anim-ember"
+            className="absolute bottom-10 w-1.5 h-1.5 rounded-full bg-[#FEDD00] anim-ember"
             style={
               {
                 left: `${e.left}%`,
@@ -46,7 +46,7 @@ export default function BigFogueira({ emberCount = 14 }: { emberCount?: number }
       <div
         aria-hidden="true"
         className="absolute -inset-8 rounded-full blur-2xl opacity-40 pointer-events-none"
-        style={{ background: "radial-gradient(circle, #F76707 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, #D45D12 0%, transparent 70%)" }}
       />
     </div>
   );

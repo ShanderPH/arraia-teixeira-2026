@@ -22,9 +22,13 @@ class GuestService:
         guest = self._repo.create(
             name=payload.name,
             attending=payload.attending,
+            guest_count=payload.guest_count,
             dish_id=dish_id,
         )
         return GuestResponse(**guest)
+
+    def delete_guest(self, guest_id: UUID) -> None:
+        self._repo.delete(guest_id)
 
     def list_guests(self) -> list[GuestResponse]:
         guests = self._repo.get_all()
