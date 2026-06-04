@@ -7,13 +7,17 @@ interface CountdownProps {
   label?: string;
 }
 
-function subscribe(notify: () => void) {
-  const id = window.setInterval(notify, 1000);
-  return () => window.clearInterval(id);
+let cachedNow = Date.now();
+function getNow() {
+  return cachedNow;
 }
 
-function getNow() {
-  return Date.now();
+function subscribe(notify: () => void) {
+  const id = window.setInterval(() => {
+    cachedNow = Date.now();
+    notify();
+  }, 1000);
+  return () => window.clearInterval(id);
 }
 
 function getServerNow() {

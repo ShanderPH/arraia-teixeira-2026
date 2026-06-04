@@ -3,8 +3,8 @@ import { Alfa_Slab_One, Caveat, Nunito } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import MobileBottomBar from "@/components/MobileBottomBar";
+import BackgroundMusic from "@/components/BackgroundMusic";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -58,10 +58,10 @@ export default function RootLayout({
         <Header />
         <main className="flex-1 w-full pb-20 md:pb-0">{children}</main>
         <Footer />
-        {/* Floating WhatsApp support button */}
-        <WhatsAppButton variant="floating" />
         {/* Bottom navigation bar — mobile only */}
         <MobileBottomBar />
+        {/* Background music player — hidden YouTube audio */}
+        <BackgroundMusic />
       </body>
     </html>
   );

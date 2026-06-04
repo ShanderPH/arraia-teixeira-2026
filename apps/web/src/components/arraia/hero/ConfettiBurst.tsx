@@ -11,7 +11,7 @@ interface Particle {
   rot: number;
 }
 
-const PALETTE = ["#C92A2A", "#FFD43B", "#364FC7", "#2B8A3E", "#F76707", "#FFF3BF"];
+const PALETTE = ["#009739", "#FEDD00", "#D45D12", "#B23A1F", "#1FB35A", "#FFFFFF"];
 
 interface Props {
   trigger: number;

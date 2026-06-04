@@ -1,76 +1,55 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { DishResponse, GuestResponse } from "@/lib/api";
-import { getDishEntry, normalizeDishName } from "@/lib/dish-catalog";
+import { PREDEFINED_DISHES, CATEGORY_EMOJI, type DishCategory } from "@/lib/dishes";
 import RSVPModal from "./RSVPModal";
 import { Chapeu } from "./svgs";
+import { api } from "@/lib/api";
 
 interface DishesSectionProps {
   dishes: DishResponse[];
   guests: GuestResponse[];
 }
 
-const KNOWN_DISHES = [
-  "Canjica",
-  "Pamonha",
-  "Bolo de Fubá",
-  "Quentão",
-  "Paçoca",
-  "Pipoca doce",
-  "Bolinho de chuva",
-  "Arroz doce",
-];
+const DISPLAY_CATEGORIES: DishCategory[] = ["Doces", "Caldos", "Salgados"];
 
-export default function DishesSection({ dishes, guests }: DishesSectionProps) {
+export default function DishesSection({ dishes: initialDishes, guests }: DishesSectionProps) {
+  const [dishes, setDishes] = useState(initialDishes);
   const [modalOpen, setModalOpen] = useState(false);
   const [preselected, setPreselected] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<DishCategory>("Doces");
 
-  const guestsByDishId = useMemo(() => {
-    const map = new Map<string, GuestResponse[]>();
+  useEffect(() => {
+    api.dishes.list().then(setDishes).catch(() => {});
+  }, []);
+
+  const countByDishName = useMemo(() => {
+    const nameById = new Map<string, string>();
+    for (const d of dishes) nameById.set(d.id, d.name);
+    const counts = new Map<string, number>();
     for (const g of guests) {
       if (!g.attending || !g.dish_id) continue;
-      const list = map.get(g.dish_id) ?? [];
-      list.push(g);
-      map.set(g.dish_id, list);
+      const name = nameById.get(g.dish_id);
+      if (name) counts.set(name, (counts.get(name) ?? 0) + 1);
     }
-    return map;
-  }, [guests]);
-
-  // Ensure known dishes always appear (even if backend doesn't have them yet)
-  const mergedDishes = useMemo(() => {
-    const byName = new Map<string, DishResponse>();
-    for (const d of dishes) {
-      byName.set(normalizeDishName(d.name), d);
-    }
-    const result: Array<{ id: string | null; name: string; count: number }> = [];
-    for (const known of KNOWN_DISHES) {
-      const existing = byName.get(normalizeDishName(known));
-      if (existing) {
-        result.push({
-          id: existing.id,
-          name: existing.name,
-          count: guestsByDishId.get(existing.id)?.length ?? 0,
-        });
-        byName.delete(normalizeDishName(known));
-      } else {
-        result.push({ id: null, name: known, count: 0 });
-      }
-    }
-    for (const d of byName.values()) {
-      result.push({
-        id: d.id,
-        name: d.name,
-        count: guestsByDishId.get(d.id)?.length ?? 0,
-      });
-    }
-    return result;
-  }, [dishes, guestsByDishId]);
+    return counts;
+  }, [dishes, guests]);
 
   function openForDish(name: string) {
     setPreselected(name);
     setModalOpen(true);
   }
+
+  const photoByName = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const d of dishes) {
+      if (d.photo_url) map.set(d.name.toLowerCase(), d.photo_url);
+    }
+    return map;
+  }, [dishes]);
+
+  const displayedDishes = PREDEFINED_DISHES.filter((d) => d.category === activeCategory);
 
   return (
     <section
@@ -79,11 +58,11 @@ export default function DishesSection({ dishes, guests }: DishesSectionProps) {
       className="wood py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
     >
       <div className="mx-auto max-w-6xl relative z-10">
-        <header className="text-center mb-10 sm:mb-14 space-y-3">
-          <div className="flex justify-center text-earth">
+        <header className="text-center mb-8 sm:mb-12 space-y-3">
+          <div className="flex justify-center text-corn">
             <Chapeu size={72} />
           </div>
-          <h2 className="font-display text-4xl sm:text-5xl text-earth uppercase">
+          <h2 className="font-display text-4xl sm:text-5xl text-corn uppercase">
             Cardápio da Arraia
           </h2>
           <p className="font-hand text-2xl text-accent">
@@ -91,47 +70,114 @@ export default function DishesSection({ dishes, guests }: DishesSectionProps) {
           </p>
         </header>
 
-        <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          {mergedDishes.map((dish) => {
-            const entry = getDishEntry(dish.name);
-            const Icon = entry.Icon;
-            const claimed = dish.count > 0;
+        {/* Category tabs */}
+        <div
+          className="flex justify-center mb-8 p-1.5 rounded-2xl bg-black/30 border border-white/10 w-fit mx-auto gap-1"
+          role="tablist"
+          aria-label="Categorias de pratos"
+        >
+          {DISPLAY_CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              role="tab"
+              aria-selected={activeCategory === cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`
+                flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold
+                transition-all duration-200
+                focus:outline-none focus-visible:ring-2 focus-visible:ring-corn
+                ${activeCategory === cat
+                  ? "bg-corn text-[#1a0a00] shadow-md scale-105"
+                  : "text-corn/70 hover:text-corn hover:bg-white/10"
+                }
+              `}
+            >
+              <span aria-hidden="true">{CATEGORY_EMOJI[cat]}</span>
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <ul
+          role="tabpanel"
+          aria-label={`Pratos: ${activeCategory}`}
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+        >
+          {displayedDishes.map((dish) => {
+            const count = countByDishName.get(dish.name) ?? 0;
+            const claimed = count > 0;
+            const photoUrl = photoByName.get(dish.name.toLowerCase());
             return (
-              <li key={dish.name}>
-                <button
-                  type="button"
-                  onClick={() => openForDish(dish.name)}
-                  aria-label={`Escolher ${dish.name}${claimed ? ` (${dish.count} já confirmou)` : ""}`}
-                  className={`
-                    group relative w-full h-full p-4 sm:p-5
-                    rounded-3xl border-2 border-earth/25
-                    bg-surface text-foreground
-                    shadow-surface lift press
-                    flex flex-col items-center text-center gap-2
-                    focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2
-                  `}
-                >
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${entry.tone}`}>
-                    <Icon size={52} />
-                  </div>
-                  <h3 className="font-display text-lg sm:text-xl uppercase tracking-wide leading-tight">
-                    {dish.name}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-muted leading-snug">
-                    {entry.desc}
-                  </p>
-                  {claimed ? (
-                    <span
-                      className="mt-auto inline-flex items-center gap-1 text-xs font-bold text-junina-green bg-junina-green/10 border border-junina-green/30 px-2.5 py-1 rounded-full"
-                    >
-                      ✓ {dish.count} trazendo
-                    </span>
-                  ) : (
-                    <span className="mt-auto inline-flex items-center gap-1 text-xs font-semibold text-accent bg-accent/10 border border-accent/30 px-2.5 py-1 rounded-full">
-                      + Escolher
-                    </span>
-                  )}
-                </button>
+              <li key={dish.id}>
+                {photoUrl ? (
+                  /* ── Card com foto ── */
+                  <button
+                    type="button"
+                    onClick={claimed ? undefined : () => openForDish(dish.name)}
+                    disabled={claimed}
+                    aria-label={claimed ? `${dish.name} — já escolhido por ${count} pessoa${count !== 1 ? "s" : ""}` : `Escolher ${dish.name}`}
+                    className={`group relative w-full aspect-[3/4] rounded-3xl overflow-hidden border-2 shadow-surface focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 ${claimed ? "border-junina-green/50 cursor-not-allowed" : "border-white/15 lift press"}`}
+                  >
+                    <img
+                      src={photoUrl}
+                      alt={dish.name}
+                      className={`absolute inset-0 w-full h-full object-cover transition-transform duration-300 ${claimed ? "" : "group-hover:scale-105"}`}
+                    />
+                    {/* base gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                    {/* claimed: extra dark backdrop + centered badge */}
+                    {claimed && (
+                      <>
+                        <div className="absolute inset-0 bg-black/55" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-junina-green/90 px-3 py-1.5 rounded-full shadow">
+                            ✓ Já escolhido
+                          </span>
+                        </div>
+                      </>
+                    )}
+                    {/* footer info */}
+                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 flex flex-col items-center text-center gap-1.5">
+                      <h3 className="font-display text-base sm:text-lg text-white uppercase tracking-wide leading-tight drop-shadow">
+                        {dish.name}
+                      </h3>
+                      {claimed ? (
+                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-white/80">
+                          {count} trazendo
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-white bg-accent/80 px-2.5 py-1 rounded-full">
+                          + Escolher
+                        </span>
+                      )}
+                    </div>
+                  </button>
+                ) : (
+                  /* ── Card sem foto ── */
+                  <button
+                    type="button"
+                    onClick={claimed ? undefined : () => openForDish(dish.name)}
+                    disabled={claimed}
+                    aria-label={claimed ? `${dish.name} — já escolhido por ${count} pessoa${count !== 1 ? "s" : ""}` : `Escolher ${dish.name}`}
+                    className={`group relative w-full aspect-[3/4] rounded-3xl border-2 shadow-surface flex flex-col items-center justify-center text-center gap-2 p-4 sm:p-5 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 ${claimed ? "border-junina-green/50 bg-surface/60 cursor-not-allowed" : "border-white/15 bg-surface text-foreground lift press"}`}
+                  >
+                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-4xl flex-shrink-0 ${claimed ? "opacity-40" : "bg-accent/10"}`} aria-hidden="true">
+                      {dish.emoji}
+                    </div>
+                    <h3 className={`font-display text-lg sm:text-xl uppercase tracking-wide leading-tight ${claimed ? "text-foreground/50" : ""}`}>
+                      {dish.name}
+                    </h3>
+                    {claimed ? (
+                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-junina-green/80 px-2.5 py-1 rounded-full">
+                        ✓ Já escolhido · {count}
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 text-xs font-semibold text-accent bg-accent/10 border border-accent/30 px-2.5 py-1 rounded-full">
+                        + Escolher
+                      </span>
+                    )}
+                  </button>
+                )}
               </li>
             );
           })}
@@ -142,7 +188,6 @@ export default function DishesSection({ dishes, guests }: DishesSectionProps) {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         preselectedDish={preselected}
-        availableDishes={mergedDishes.map((d) => d.name)}
       />
     </section>
   );

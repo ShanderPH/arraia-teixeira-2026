@@ -5,7 +5,7 @@ const navLinks = [
   { href: "/#pratos", label: "Cardápio" },
   { href: "/#confirmados", label: "Confirmados" },
   { href: "/#galeria", label: "Galeria" },
-  { href: "/rsvp", label: "Confirmar" },
+  { href: "/#pratos", label: "Confirmar" },
 ];
 
 export default function Header() {

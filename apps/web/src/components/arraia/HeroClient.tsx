@@ -1,23 +1,15 @@
 "use client";
 
-import { useState } from "react";
 import Hero from "./Hero";
-import RSVPModal from "./RSVPModal";
 
 interface HeroClientProps {
-  availableDishes: string[];
+  availableDishes?: string[];
 }
 
-export default function HeroClient({ availableDishes }: HeroClientProps) {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <Hero onRsvp={() => setOpen(true)} />
-      <RSVPModal
-        open={open}
-        onClose={() => setOpen(false)}
-        availableDishes={availableDishes}
-      />
-    </>
-  );
+export default function HeroClient({ availableDishes: _ }: HeroClientProps) {
+  function handleRsvp() {
+    document.getElementById("pratos")?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  return <Hero onRsvp={handleRsvp} />;
 }

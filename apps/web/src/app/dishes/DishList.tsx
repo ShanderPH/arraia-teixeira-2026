@@ -88,7 +88,7 @@ export default function DishList() {
         <p className="text-muted text-sm">
           Seja o primeiro a confirmar presença e escolher um prato especial.
         </p>
-        <Link href="/rsvp">
+        <Link href="/#pratos">
           <Button className="bg-accent text-accent-foreground font-bold px-6 rounded-xl">
             <MdOutlineCheckCircle className="text-lg" aria-hidden="true" />
             Confirmar minha presença
@@ -261,7 +261,7 @@ export default function DishList() {
 
       {/* ── CTA ── */}
       <div className="text-center pt-4 pb-2">
-        <Link href="/rsvp">
+        <Link href="/#pratos">
           <Button className="bg-accent text-accent-foreground font-bold px-8 rounded-xl shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-200">
             <MdOutlineCheckCircle className="text-lg" aria-hidden="true" />
             Confirmar minha presença

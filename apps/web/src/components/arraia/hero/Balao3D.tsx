@@ -13,8 +13,8 @@ interface Balao3DProps {
 }
 
 export default function Balao3D({
-  color = "#C92A2A",
-  accent = "#FFD43B",
+  color = "#D45D12",
+  accent = "#FEDD00",
   size = 80,
   delay = 0,
   label = "Balão de festa junina",

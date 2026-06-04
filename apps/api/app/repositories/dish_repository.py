@@ -39,6 +39,16 @@ class DishRepository:
         )
         return result.data[0]
 
+    def update_photo(self, dish_id: UUID, photo_url: str | None) -> dict:
+        result = (
+            self._client.table("dishes")
+            .update({"photo_url": photo_url})
+            .eq("id", str(dish_id))
+            .select()
+            .execute()
+        )
+        return result.data[0]
+
     def get_guest_counts(self) -> dict[str, int]:
         """Returns a mapping of dish_id -> count of attending guests."""
         result = (

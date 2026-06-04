@@ -24,15 +24,16 @@
 
 <style>
   :root {
-    --red:    #C92A2A;
-    --corn:   #FFD43B;
-    --fire:   #F76707;
-    --royal:  #364FC7;
-    --green:  #2B8A3E;
-    --straw:  #FFF3BF;
-    --earth:  #5C4033;
-    --earth-dark: #3D2010;
-    --cream:  #FFFBEA;
+    /* Palette "Arraiá Canarinho" — Copa do Mundo 2026 × Festa Junina */
+    --red:    #B23A1F;  /* Telha / Brasa */
+    --corn:   #FEDD00;  /* Amarelo Canarinho */
+    --fire:   #D45D12;  /* Terracota Fogueira */
+    --royal:  #009739;  /* Verde Bandeira */
+    --green:  #009739;  /* Verde Bandeira */
+    --straw:  #FDF8ED;  /* Palha Queimada */
+    --earth:  #432919;  /* Marrom Terracota */
+    --earth-dark: #2E1B0E;
+    --cream:  #FFFDF5;
   }
 
   html, body { background: var(--straw); color: var(--earth); font-family: 'Nunito', system-ui, sans-serif; }
@@ -46,8 +47,8 @@
   .bandeirinhas-border {
     background-image: repeating-linear-gradient(
       90deg,
-      #C92A2A 0 18px, #FFD43B 18px 36px, #364FC7 36px 54px,
-      #2B8A3E 54px 72px, #F76707 72px 90px
+      #009739 0 18px, #FEDD00 18px 36px, #D45D12 36px 54px,
+      #B23A1F 54px 72px, #1FB35A 72px 90px
     );
     height: 6px;
   }
@@ -81,8 +82,8 @@
                        70%     { transform: scaleY(0.97) scaleX(1.03); opacity: 0.97; } }
   @keyframes spinSlow{ 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
   @keyframes pulseGlow {
-    0%,100% { box-shadow: 0 0 0 0 rgba(201,42,42,0), 0 8px 24px rgba(201,42,42,0.45); }
-    50%     { box-shadow: 0 0 40px 12px rgba(201,42,42,0.35), 0 8px 48px rgba(255,212,59,0.3); }
+    0%,100% { box-shadow: 0 0 0 0 rgba(0,151,57,0), 0 8px 24px rgba(0,151,57,0.45); }
+    50%     { box-shadow: 0 0 40px 12px rgba(0,151,57,0.35), 0 8px 48px rgba(254,221,0,0.3); }
   }
   @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
   @keyframes marqueeRev { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
@@ -118,7 +119,7 @@
   .menu-open  { transform: translateX(0); transition: transform .35s cubic-bezier(.2,.8,.2,1); }
 
   /* Checkbox "fire" glow on selected dish */
-  .dish-on { box-shadow: 0 0 0 3px var(--corn), 0 12px 30px rgba(247,103,7,0.35); }
+  .dish-on { box-shadow: 0 0 0 3px var(--corn), 0 12px 30px rgba(212,93,18,0.35); }
 
   /* Hide reveal on print */
   @media (prefers-reduced-motion: reduce) {

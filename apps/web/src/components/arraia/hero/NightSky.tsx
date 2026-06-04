@@ -30,18 +30,18 @@ export default function NightSky({ count = 70 }: { count?: number }) {
     >
       {/* Moon */}
       <g>
-        <circle cx="1220" cy="110" r="52" fill="#FFF3BF" opacity="0.95" />
-        <circle cx="1200" cy="100" r="48" fill="#0C0024" />
+        <circle cx="1220" cy="110" r="52" fill="#FFFDF7" opacity="0.95" />
+        <circle cx="1200" cy="100" r="48" fill="#0D1B2A" />
       </g>
       {/* Distant mountains */}
       <path
         d="M0,420 L120,340 L240,380 L360,320 L520,410 L660,360 L820,400 L1000,340 L1200,400 L1440,360 L1440,500 L0,500 Z"
-        fill="#1A0500"
+        fill="#071220"
         opacity="0.75"
       />
       <path
         d="M0,440 L140,400 L300,430 L480,390 L640,430 L820,410 L1020,440 L1240,410 L1440,430 L1440,500 L0,500 Z"
-        fill="#2A0400"
+        fill="#0A1828"
       />
       {stars.map((s, i) => (
         <circle
