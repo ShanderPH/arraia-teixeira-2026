@@ -39,6 +39,11 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
   },
+  icons: {
+    icon: [{ url: "/arraia-teixeira-logo.png", type: "image/png" }],
+    shortcut: ["/arraia-teixeira-logo.png"],
+    apple: ["/arraia-teixeira-logo.png"],
+  },
 };
 
 export default function RootLayout({

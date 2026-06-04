@@ -10,7 +10,7 @@ import PluckableBandeirinhas from "./hero/PluckableBandeirinhas";
 import Balao3D from "./hero/Balao3D";
 import Countdown from "./hero/Countdown";
 
-const EVENT_DATE = new Date(2026, 5, 20, 18, 0);
+const EVENT_DATE = new Date(2026, 5, 20, 19, 30);
 
 interface HeroProps {
   onRsvp?: () => void;
@@ -45,8 +45,8 @@ export default function Hero({ onRsvp }: HeroProps) {
         <Balao3D color="#FEDD00" accent="#D45D12" size={56} delay={2.1} label="Balão amarelo — clique para confetes" />
       </div>
 
-      {/* Main content - SEM z-index para não criar stacking context */}
-      <div className="relative flex-1 flex flex-col items-center max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+      {/* Main content - acima da fogueira */}
+      <div className="relative z-20 flex-1 flex flex-col items-center max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
         
         {/* TOP SECTION - Textos + Contador centralizados juntos */}
         <div className="w-full flex-1 flex flex-col justify-center items-center">
@@ -121,12 +121,12 @@ export default function Hero({ onRsvp }: HeroProps) {
         </div>
       </div>
 
-      {/* FOGUEIRA - Posicionada na base, ATRÁS de tudo (z-0) */}
-      <div className="absolute bottom-0 left-0 right-0 flex items-end justify-center gap-2 sm:gap-6 lg:gap-10 pointer-events-none px-2 z-0">
+      {/* FOGUEIRA - Posicionada na base, ATRÁS dos elementos principais */}
+      <div className="absolute -bottom-16 sm:-bottom-8 md:bottom-0 left-0 right-0 flex items-end justify-center gap-2 sm:gap-6 lg:gap-10 pointer-events-none px-2 z-10">
         <div className="hidden md:block pb-8">
           <DancingCouple delay={0} />
         </div>
-        <div className="relative scale-75 sm:scale-90 lg:scale-100 origin-bottom">
+        <div className="relative scale-[0.58] sm:scale-75 md:scale-90 lg:scale-100 origin-bottom">
           <BigFogueira emberCount={18} />
         </div>
         <div className="hidden md:block pb-8">
