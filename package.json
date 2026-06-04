@@ -2,6 +2,9 @@
   "name": "arraia-teixeira-monorepo",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "web": "cd apps/web && npm run dev",
     "api": "cd apps/api && uvicorn app.main:app --reload --port ${API_PORT:-8000}",
