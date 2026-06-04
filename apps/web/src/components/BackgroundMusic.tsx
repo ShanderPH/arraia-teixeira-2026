@@ -268,14 +268,16 @@ export default function BackgroundMusic() {
         <div id="youtube-player" />
       </div>
 
-      {/* Floating mute/unmute button - bottom left, discreet */}
+      {/* Floating mute/unmute button - above mobile bottom bar */}
       <button
         onClick={toggleMute}
         aria-label={isMuted ? "Ativar música ambiente" : "Desativar música ambiente"}
         title={isMuted ? "Ativar música" : "Desativar música"}
         className={`
-          fixed bottom-20 left-4 z-40
-          md:bottom-6 md:left-6
+          fixed right-4 z-[70]
+          bottom-[calc(env(safe-area-inset-bottom)+7rem)]
+          sm:bottom-[calc(env(safe-area-inset-bottom)+6rem)]
+          md:bottom-6 md:right-6
           flex items-center justify-center
           w-10 h-10 md:w-11 md:h-11
           rounded-full
