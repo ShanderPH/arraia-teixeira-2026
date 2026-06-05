@@ -19,6 +19,7 @@ export default function DishesSection({ dishes: initialDishes, guests }: DishesS
   const [modalOpen, setModalOpen] = useState(false);
   const [preselected, setPreselected] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<DishCategory>("Doces");
+  const [openCustom, setOpenCustom] = useState(false);
 
   useEffect(() => {
     api.dishes.list().then(setDishes).catch(() => {});
@@ -37,7 +38,14 @@ export default function DishesSection({ dishes: initialDishes, guests }: DishesS
   }, [dishes, guests]);
 
   function openForDish(name: string) {
+    setOpenCustom(false);
     setPreselected(name);
+    setModalOpen(true);
+  }
+
+  function openForCustom() {
+    setPreselected(null);
+    setOpenCustom(true);
     setModalOpen(true);
   }
 
@@ -182,12 +190,24 @@ export default function DishesSection({ dishes: initialDishes, guests }: DishesS
             );
           })}
         </ul>
+
+        <div className="flex justify-center pt-8">
+          <button
+            type="button"
+            onClick={openForCustom}
+            className="inline-flex items-center gap-2 font-hand text-xl text-corn border-2 border-corn/60 bg-corn/10 hover:bg-corn/20 px-6 py-3 rounded-2xl shadow-surface transition lift press focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
+          >
+            <span aria-hidden="true">🍽️</span>
+            Levar outro prato
+          </button>
+        </div>
       </div>
 
       <RSVPModal
         open={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={() => { setModalOpen(false); setOpenCustom(false); }}
         preselectedDish={preselected}
+        openOnCustom={openCustom}
       />
     </section>
   );

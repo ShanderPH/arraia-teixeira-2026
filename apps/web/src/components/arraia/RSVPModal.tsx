@@ -17,6 +17,7 @@ interface RSVPModalProps {
   open: boolean;
   onClose: () => void;
   preselectedDish?: string | null;
+  openOnCustom?: boolean;
 }
 
 const DISH_CATEGORIES = (["Doces", "Caldos", "Salgados"] as DishCategory[]).filter((c) =>
@@ -27,6 +28,7 @@ export default function RSVPModal({
   open,
   onClose,
   preselectedDish = null,
+  openOnCustom = false,
 }: RSVPModalProps) {
   const router = useRouter();
   const formId = useId();
@@ -54,14 +56,15 @@ export default function RSVPModal({
 
   const photoByName = new Map(remoteDishes.map((d) => [d.name.toLowerCase(), d.photo_url ?? null]));
 
-  // Sync preselectedDish on open
-  const [prevKey, setPrevKey] = useState(`${open}-${preselectedDish ?? ""}`);
-  const currentKey = `${open}-${preselectedDish ?? ""}`;
+  // Sync preselectedDish and openOnCustom on open
+  const [prevKey, setPrevKey] = useState(`${open}-${preselectedDish ?? ""}-${openOnCustom}`);
+  const currentKey = `${open}-${preselectedDish ?? ""}-${openOnCustom}`;
   if (prevKey !== currentKey) {
     setPrevKey(currentKey);
     const match = PREDEFINED_DISHES.find((d) => d.name === preselectedDish);
     setSelectedDishId(match?.id ?? "");
     if (match) setActiveCategory(match.category);
+    if (openOnCustom) setUseCustomDish(true);
   }
 
   // Focus trap + Esc close
