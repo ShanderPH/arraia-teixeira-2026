@@ -18,6 +18,7 @@ export default function DishesSection({ dishes: initialDishes, guests }: DishesS
   const [dishes, setDishes] = useState(initialDishes);
   const [modalOpen, setModalOpen] = useState(false);
   const [preselected, setPreselected] = useState<string | null>(null);
+  const [openCustom, setOpenCustom] = useState(false);
 
   useEffect(() => {
     api.dishes.list().then(setDishes).catch(() => {});
@@ -162,6 +163,17 @@ export default function DishesSection({ dishes: initialDishes, guests }: DishesS
               </section>
             );
           })}
+
+          <div className="flex justify-center pt-6">
+            <button
+              type="button"
+              onClick={openForCustom}
+              className="inline-flex items-center gap-2 font-hand text-xl text-corn border-2 border-corn/60 bg-corn/10 hover:bg-corn/20 px-6 py-3 rounded-2xl shadow-surface transition lift press focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
+            >
+              <span aria-hidden="true">🍽️</span>
+              Levar outro prato
+            </button>
+          </div>
         </div>
       </div>
 
