@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GiPartyFlags } from "react-icons/gi";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -9,7 +9,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-corn font-display text-xl uppercase">
-              <GiPartyFlags className="text-2xl" aria-hidden="true" />
+              <Image
+                src="/arraia-teixeira-logo.png"
+                alt="Logo Arraia Teixeira"
+                width={32}
+                height={32}
+                className="rounded-full"
+              />
               Arraia Teixeira
             </div>
             <p className="text-sm text-white/70 leading-relaxed">
@@ -25,9 +31,19 @@ export default function Footer() {
             </h3>
             <ul className="space-y-1.5 text-sm text-white/70">
               <li>📅 <strong className="text-white">Data:</strong> 20 de junho de 2026</li>
-              <li>⏰ <strong className="text-white">Horário:</strong> a partir das 18h</li>
-              <li>📍 <strong className="text-white">Local:</strong> Sítio da família</li>
-              <li>🎶 <strong className="text-white">Música:</strong> forró ao vivo</li>
+              <li>⏰ <strong className="text-white">Horário:</strong> 19:30h</li>
+              <li>
+                📍 <strong className="text-white">Local:</strong>{" "}
+                <a
+                  href="https://maps.app.goo.gl/xREUf8dkk83cuogcA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-corn hover:underline underline-offset-2"
+                  aria-label="Abrir localização do evento no aplicativo de mapas"
+                >
+                  Av. Visconde do Rio Branco, 357 - Vila Prudêncio, Cariacica - ES, 29155-180
+                </a>
+              </li>
             </ul>
             <nav aria-label="Navegar pela página" className="pt-2">
               <ul className="flex flex-wrap gap-3 text-xs uppercase tracking-wider">

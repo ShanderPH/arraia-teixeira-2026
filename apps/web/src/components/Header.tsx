@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GiPartyFlags } from "react-icons/gi";
+import Image from "next/image";
 
 const navLinks = [
   { href: "/#pratos", label: "Cardápio" },
@@ -19,7 +19,14 @@ export default function Header() {
             className="flex items-center gap-2.5 text-accent font-display text-xl uppercase tracking-wide hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 rounded-md"
             aria-label="Arraia Teixeira — ir para o início"
           >
-            <GiPartyFlags className="text-2xl text-corn flex-shrink-0" aria-hidden="true" />
+            <Image
+              src="/arraia-teixeira-logo.png"
+              alt="Logo Arraia Teixeira"
+              width={34}
+              height={34}
+              className="rounded-full flex-shrink-0"
+              priority
+            />
             <span>Arraia Teixeira</span>
           </Link>
 
